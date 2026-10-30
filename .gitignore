@@ -1,1 +1,23 @@
 /.github
+
+# Visual Studio
+.vs/
+
+# Dependências
+node_modules/
+
+# Saídas de build
+dist/
+build/
+coverage/
+
+# Arquivos locais e variáveis de ambiente
+*.local
+.env
+.env.*
+!.env.example
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*

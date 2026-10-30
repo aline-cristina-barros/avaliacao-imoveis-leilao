@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import './App.css'
+import AnaliseOportunidade from './AnaliseOportunidade.jsx'
 
 const features = [
   {
@@ -31,6 +32,7 @@ const features = [
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [activeFeature, setActiveFeature] = useState(0)
+  const [activePage, setActivePage] = useState('home')
 
   useEffect(() => {
     if (!isMenuOpen) return undefined
@@ -61,7 +63,12 @@ function App() {
           >
             <span className="menu-toggle__icon" aria-hidden="true" />
           </button>
-          <a className="brand" href="#home" aria-label="Radar imobiliário, início">
+          <a
+            className="brand"
+            href="#home"
+            aria-label="Radar imobiliário, início"
+            onClick={() => setActivePage('home')}
+          >
             <span className="brand__mark" aria-hidden="true">
               <span />
               <span />
@@ -96,15 +103,33 @@ function App() {
             </div>
             <nav aria-label="Menu principal">
               <a
-                className="navigation-link navigation-link--active"
+                className={`navigation-link${activePage === 'home' ? ' navigation-link--active' : ''}`}
                 href="#home"
-                aria-current="page"
-                onClick={() => setIsMenuOpen(false)}
+                aria-current={activePage === 'home' ? 'page' : undefined}
+                onClick={() => {
+                  setActivePage('home')
+                  setIsMenuOpen(false)
+                }}
               >
                 <span className="navigation-link__icon" aria-hidden="true">
                   <span />
                 </span>
                 Home
+                <span className="navigation-link__arrow" aria-hidden="true">↗</span>
+              </a>
+              <a
+                className={`navigation-link${activePage === 'analysis' ? ' navigation-link--active' : ''}`}
+                href="#analise"
+                aria-current={activePage === 'analysis' ? 'page' : undefined}
+                onClick={() => {
+                  setActivePage('analysis')
+                  setIsMenuOpen(false)
+                }}
+              >
+                <span className="navigation-link__icon" aria-hidden="true">
+                  <span />
+                </span>
+                Análise de oportunidade
                 <span className="navigation-link__arrow" aria-hidden="true">↗</span>
               </a>
             </nav>
@@ -116,6 +141,9 @@ function App() {
         </>
       )}
 
+      {activePage === 'analysis' ? (
+        <AnaliseOportunidade />
+      ) : (
       <main className="page-main">
         <div className="page-heading">
           <div>
@@ -204,6 +232,7 @@ function App() {
           <span>HOME <i /> 01</span>
         </footer>
       </main>
+      )}
     </div>
   )
 }
