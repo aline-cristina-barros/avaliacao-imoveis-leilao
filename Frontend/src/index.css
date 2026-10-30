@@ -1,0 +1,50 @@
+:root {
+    --paper: #fbfaf6;
+    --paper-deep: #f1f0e9;
+    --ink: #272a24;
+    --muted: #77796f;
+    --line: #e6e5dc;
+    --line-strong: #cecec2;
+    --signal: #b94f39;
+    --ui-font: "Avenir Next", Avenir, "Segoe UI", sans-serif;
+    --display-font: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+    font-family: var(--ui-font);
+    color: var(--ink);
+    background: var(--paper);
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-optical-sizing: auto;
+    font-weight: 400;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    min-width: 320px;
+    min-height: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    min-width: 320px;
+    min-height: 100vh;
+    margin: 0;
+}
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+button {
+    font: inherit;
+}
+
+::selection {
+    color: var(--paper);
+    background: var(--signal);
+}
