@@ -1,22 +1,6 @@
 import { useEffect, useState } from 'react'
 import './AnaliseOportunidade.css'
-
-const property = {
-  marketValue: 480000,
-  bid: 320000,
-  auctioneer: 16000,
-  itbi: 10800,
-  registry: 6500,
-  other: 3500,
-}
-
-const initialCosts = {
-  bid: String(property.bid),
-  auctioneer: String(property.auctioneer),
-  itbi: String(property.itbi),
-  registry: String(property.registry),
-  other: String(property.other),
-}
+import imoveis from './data/imoveis.json'
 
 const currency = new Intl.NumberFormat('pt-BR', {
   style: 'currency',
@@ -37,9 +21,18 @@ function numericValue(value) {
   return Number.isFinite(parsed) && parsed > 0 ? parsed : 0
 }
 
+function getInitialCosts(property) {
+  return Object.fromEntries(
+    costFields.map(({ key }) => [key, String(property.costs[key])]),
+  )
+}
+
 function AnaliseOportunidade() {
   const [isSimulationOpen, setIsSimulationOpen] = useState(false)
-  const [costs, setCosts] = useState(initialCosts)
+  const [selectedPropertyId, setSelectedPropertyId] = useState(imoveis[0].id)
+  const [costs, setCosts] = useState(() => getInitialCosts(imoveis[0]))
+  const property = imoveis.find(({ id }) => id === selectedPropertyId)
+  const selectedPropertyIndex = imoveis.findIndex(({ id }) => id === selectedPropertyId)
   const total = costFields.reduce((sum, field) => sum + numericValue(costs[field.key]), 0)
   const marketDifference = Math.abs(property.marketValue - total)
   const isBelowMarket = total <= property.marketValue
@@ -59,6 +52,12 @@ function AnaliseOportunidade() {
     setCosts((current) => ({ ...current, [key]: value }))
   }
 
+  function selectProperty(event) {
+    const nextProperty = imoveis.find(({ id }) => id === event.target.value)
+    setSelectedPropertyId(nextProperty.id)
+    setCosts(getInitialCosts(nextProperty))
+  }
+
   return (
     <main className="page-main analysis-page" id="analise">
       <div className="analysis-heading page-heading">
@@ -69,31 +68,42 @@ function AnaliseOportunidade() {
         <span className="demo-notice">Dados fictícios — demonstração do produto</span>
       </div>
 
+      <div className="property-picker">
+        <label htmlFor="property-choice">Imóvel da demonstração</label>
+        <select id="property-choice" value={selectedPropertyId} onChange={selectProperty}>
+          {imoveis.map((option, index) => (
+            <option key={option.id} value={option.id}>
+              Imóvel {String(index + 1).padStart(2, '0')} · {option.neighborhood}, {option.city}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <section className="property-summary" aria-labelledby="property-title">
         <img
           className="property-summary__image"
-          src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1400&q=85"
-          alt="Casa contemporânea com jardim, imagem ilustrativa do imóvel fictício"
+          src={property.image}
+          alt={property.imageAlt}
         />
         <div className="property-summary__details">
           <div className="property-summary__topline">
-            <span className="property-summary__tag">IMÓVEL 01</span>
-            <span className="property-summary__location">São Francisco, Niterói — RJ</span>
+            <span className="property-summary__tag">IMÓVEL {String(selectedPropertyIndex + 1).padStart(2, '0')}</span>
+            <span className="property-summary__location">{property.neighborhood}, {property.city}</span>
           </div>
-          <h2 id="property-title">Casa residencial</h2>
+          <h2 id="property-title">{property.type}</h2>
           <dl className="property-facts">
-            <div><dt>Área</dt><dd>78 m²</dd></div>
-            <div><dt>Quartos</dt><dd>2</dd></div>
-            <div><dt>Ocupação</dt><dd>Ocupado</dd></div>
-            <div><dt>Data do leilão</dt><dd>18 nov 2026</dd></div>
+            <div><dt>Área</dt><dd>{property.area} m²</dd></div>
+            <div><dt>Quartos</dt><dd>{property.bedrooms}</dd></div>
+            <div><dt>Ocupação</dt><dd>{property.occupancy}</dd></div>
+            <div><dt>Data do leilão</dt><dd>{property.auctionDate}</dd></div>
           </dl>
         </div>
       </section>
 
       <section className="analysis-metrics" aria-label="Indicadores principais">
         <article className="metric">
-          <p>LANCE MÍNIMO</p>
-          <strong>{currency.format(property.bid)}</strong>
+          <p>LANCE SIMULADO</p>
+          <strong>{currency.format(numericValue(costs.bid))}</strong>
         </article>
         <article className="metric">
           <p>VALOR DE MERCADO ESTIMADO</p>
@@ -102,7 +112,7 @@ function AnaliseOportunidade() {
         </article>
         <article className="metric metric--total">
           <p>CUSTO TOTAL ESTIMADO</p>
-          <strong>{currency.format(property.bid + property.auctioneer + property.itbi + property.registry + property.other)}</strong>
+          <strong>{currency.format(total)}</strong>
           <span>Soma dos custos detalhados abaixo.</span>
         </article>
       </section>
@@ -120,12 +130,12 @@ function AnaliseOportunidade() {
             {costFields.map((field) => (
               <div className="cost-list__row" key={field.key}>
                 <dt>{field.label}</dt>
-                <dd>{currency.format(Number(initialCosts[field.key]))}</dd>
+                <dd>{currency.format(numericValue(costs[field.key]))}</dd>
               </div>
             ))}
             <div className="cost-list__row cost-list__row--total">
               <dt>Custo total estimado</dt>
-              <dd>{currency.format(property.bid + property.auctioneer + property.itbi + property.registry + property.other)}</dd>
+              <dd>{currency.format(total)}</dd>
             </div>
           </dl>
           <p className="cost-note">O ITBI é uma estimativa ilustrativa, sujeita às regras e à base de cálculo do município.</p>
@@ -140,10 +150,10 @@ function AnaliseOportunidade() {
             <span>EXEMPLO FICTÍCIO</span>
           </div>
           <dl className="notice-list">
-            <div><dt>Pagamento</dt><dd>À vista em até 24 horas após a arrematação, conforme este cenário fictício.</dd></div>
-            <div><dt>Débitos</dt><dd>O edital hipotético atribui ao arrematante débitos não cobertos pelo preço.</dd></div>
-            <div><dt>Ocupação</dt><dd>Imóvel ocupado; desocupação pode exigir prazo, negociação ou medida judicial.</dd></div>
-            <div><dt>Documentação</dt><dd>Confirmar matrícula, ônus, débitos e condições do edital antes de qualquer decisão.</dd></div>
+            <div><dt>Pagamento</dt><dd>{property.notice.payment}</dd></div>
+            <div><dt>Débitos</dt><dd>{property.notice.debts}</dd></div>
+            <div><dt>Ocupação</dt><dd>{property.notice.occupancy}</dd></div>
+            <div><dt>Documentação</dt><dd>{property.notice.documentation}</dd></div>
           </dl>
           <p className="notice-disclaimer">Resumo ilustrativo, não extraído nem interpretado por IA. Consulte o edital oficial e profissionais habilitados.</p>
         </section>
@@ -153,7 +163,7 @@ function AnaliseOportunidade() {
         <div>
           <p className="section-kicker">PONTOS DE ATENÇÃO</p>
           <h2 id="analysis-title">Preço não é custo total.</h2>
-          <p>Embora o lance mínimo fictício seja inferior à referência de mercado, comissão, tributos, cartório e eventuais despesas de desocupação elevam o desembolso. Ocupação, débitos e documentação trazem incertezas; esta demonstração não recomenda a compra.</p>
+          <p>{property.analysis}</p>
         </div>
         <button className="primary-action" type="button" onClick={() => setIsSimulationOpen(true)}>
           Simular compra <span aria-hidden="true">↗</span>

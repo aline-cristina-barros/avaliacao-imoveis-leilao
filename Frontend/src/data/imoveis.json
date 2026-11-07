@@ -1,0 +1,83 @@
+[
+  {
+    "id": "casa-niteroi",
+    "image": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1400&q=85",
+    "imageAlt": "Casa contemporânea com jardim, imagem ilustrativa do imóvel fictício",
+    "neighborhood": "São Francisco",
+    "city": "Niterói — RJ",
+    "type": "Casa residencial",
+    "area": 78,
+    "bedrooms": 2,
+    "occupancy": "Ocupado",
+    "auctionDate": "18 nov 2026",
+    "marketValue": 480000,
+    "costs": {
+      "bid": 320000,
+      "auctioneer": 16000,
+      "itbi": 10800,
+      "registry": 6500,
+      "other": 3500
+    },
+    "notice": {
+      "payment": "À vista em até 24 horas após a arrematação, conforme este cenário fictício.",
+      "debts": "O edital hipotético atribui ao arrematante débitos não cobertos pelo preço.",
+      "occupancy": "Imóvel ocupado; desocupação pode exigir prazo, negociação ou medida judicial.",
+      "documentation": "Confirmar matrícula, ônus, débitos e condições do edital antes de qualquer decisão."
+    },
+    "analysis": "O lance mínimo fictício é inferior à referência de mercado, mas comissão, tributos, cartório e eventuais despesas de desocupação elevam o desembolso. Ocupação, débitos e documentação trazem incertezas; esta demonstração não recomenda a compra."
+  },
+  {
+    "id": "apartamento-campinas",
+    "image": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1400&q=85",
+    "imageAlt": "Apartamento contemporâneo com varanda, imagem ilustrativa do imóvel fictício",
+    "neighborhood": "Cambuí",
+    "city": "Campinas — SP",
+    "type": "Apartamento residencial",
+    "area": 64,
+    "bedrooms": 2,
+    "occupancy": "Desocupado",
+    "auctionDate": "02 dez 2026",
+    "marketValue": 395000,
+    "costs": {
+      "bid": 265000,
+      "auctioneer": 13250,
+      "itbi": 7950,
+      "registry": 5800,
+      "other": 2500
+    },
+    "notice": {
+      "payment": "Pagamento à vista em até 48 horas, conforme edital hipotético.",
+      "debts": "Possíveis débitos condominiais anteriores precisam ser verificados no edital e com o condomínio.",
+      "occupancy": "Indicado como desocupado no cenário fictício; confirmar a situação antes de qualquer decisão.",
+      "documentation": "Verificar matrícula atualizada, convenção do condomínio, débitos e regras do leilão."
+    },
+    "analysis": "O valor de lance fictício fica abaixo da referência estimada, mas comissão, ITBI, registro e eventuais débitos condominiais compõem o desembolso. As informações de ocupação e documentação precisam ser confirmadas; esta demonstração não recomenda a compra."
+  },
+  {
+    "id": "sobrado-belo-horizonte",
+    "image": "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=1400&q=85",
+    "imageAlt": "Sobrado com fachada clara, imagem ilustrativa do imóvel fictício",
+    "neighborhood": "Pampulha",
+    "city": "Belo Horizonte — MG",
+    "type": "Sobrado residencial",
+    "area": 112,
+    "bedrooms": 3,
+    "occupancy": "Ocupado",
+    "auctionDate": "15 jan 2027",
+    "marketValue": 620000,
+    "costs": {
+      "bid": 410000,
+      "auctioneer": 20500,
+      "itbi": 12300,
+      "registry": 8200,
+      "other": 6000
+    },
+    "notice": {
+      "payment": "Entrada e saldo em prazo definido no edital fictício; confirmar disponibilidade de financiamento.",
+      "debts": "A responsabilidade por débitos e encargos deve ser conferida no edital e junto aos órgãos competentes.",
+      "occupancy": "Imóvel ocupado; prazo e custos para desocupação são incertos neste cenário.",
+      "documentation": "Analisar matrícula, eventuais ônus, débitos municipais e condições para pagamento."
+    },
+    "analysis": "O lance mínimo fictício representa apenas parte do desembolso total. Comissão, tributos, cartório e possíveis custos de desocupação devem ser considerados, além das incertezas de débitos e documentação; esta demonstração não recomenda a compra."
+  }
+]
